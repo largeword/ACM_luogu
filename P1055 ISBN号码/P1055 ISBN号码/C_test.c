@@ -26,3 +26,30 @@ int main()
 	system("pause");
 	return 0;
 }
+
+/*
+#pragma warning(disable:4996);
+
+#include<stdio.h>
+#include<stdlib.h>
+
+int main()
+{
+	int a, b, c, sum, i;
+	char d, j;
+
+	scanf("%d-%d-%d-%c", &a, &b, &c, &d);
+
+	sum = a * 1 + (b / 100) * 2 + ((b / 10) % 10) * 3 + (b % 10) * 4 + (c / 10000) * 5 + ((c / 1000) % 10) * 6 + ((c / 100) % 10) * 7 + ((c / 10) % 10) * 8 + (c % 10) * 9;
+	i = sum % 11;
+
+	if (i == 10) j = 'X';
+	else { j = (char)(i + 48); }
+
+	if (d == j) printf("Right");
+	else { printf("%d-%d-%d-%c", a, b, c, j); }
+
+	system("pause");
+	return 0;
+}
+*/
