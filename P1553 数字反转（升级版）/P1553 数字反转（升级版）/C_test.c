@@ -4,7 +4,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int TypeOFInput(char array[])//ÅĞ¶ÏÊäÈëµÄÊıÊÇÊ²Ã´ÀàĞÍ£¬ÕûÊırt sign*100+½áÎ²Î»ÖÃ£¬Ğ¡Êırt sign*100+Ğ¡ÊıµãÎ»ÖÃ£¬·ÖÊırt sign*100+Ğ±¸ÜÎ»ÖÃ£¬°Ù·ÖÊırt sign*100+½áÎ²Î»ÖÃ
+int TypeOFInput(char array[])//ÅĞ¶ÏÊäÈëµÄÊıÊÇÊ²Ã´ÀàĞÍ£¬ÕûÊırt sign*100+½áÎ²Î»ÖÃ£¬Ğ¡Êırt sign*100+Ğ¡ÊıµãÎ»ÖÃ£¬·ÖÊırt sign*100+Ğ±¸ÜÎ»ÖÃ£¬°Ù·ÖÊırt sign*100+×îºóÒ»Î»Êı×ÖÎ»ÖÃ
 {
 	int i, sign = 1, location;//ÕûÊısign=1£¬Ğ¡Êısign=2£¬·ÖÊısign=3£¬°Ù·ÖÊısign=4
 
@@ -23,7 +23,7 @@ int TypeOFInput(char array[])//ÅĞ¶ÏÊäÈëµÄÊıÊÇÊ²Ã´ÀàĞÍ£¬ÕûÊırt sign*100+½áÎ²Î»ÖÃ£
 		else if (array[i] == '%')
 		{
 			sign = 4;
-			location = i;
+			location = i - 1;
 		}
 		else continue;
 	}
@@ -32,19 +32,42 @@ int TypeOFInput(char array[])//ÅĞ¶ÏÊäÈëµÄÊıÊÇÊ²Ã´ÀàĞÍ£¬ÕûÊırt sign*100+½áÎ²Î»ÖÃ£
 	return sign * 100 + location;
 }
 
-/*void reverse(char array[], int sign)
+void reverse(char input[], char output[], int param)
 {
+	int sign, location, i, j;
+	sign = param / 100; location = param % 100;
 
+	if (sign == 1)
+	{
+		for (i = 0, j = 0; i < location + 1; i++)
+		{
+			if (input[location - j] == '0')
+			{
+				j++;
+				continue;
+			}
+			else {
+				output[i] = input[location - j - i];
+			}
+		}
+	}
 }
-*/
+
 int main()
 {
-	char array[22]= { '1', '2', '3', '5', '4' };
+	char raw[22] = { '1','2','3','0','0' }, reverse1[22] = { '*' };
 	int a;
 
-	a = TypeOFInput(array);
+
+	a = TypeOFInput(raw);
+
+	reverse(raw, reverse1, a);
 
 	printf("%d", a);
+	for (a = 0; a < 22 && reverse1[a] != '\0' && reverse1[a] != -52; a++)
+	{
+		printf("%c", reverse1[a]);
+	}
 
 	system("pause");
 	return 0;
