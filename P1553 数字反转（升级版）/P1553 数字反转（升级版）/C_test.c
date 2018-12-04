@@ -6,56 +6,80 @@
 
 int TypeOFInput(char array[])//判断输入的数是什么类型，整数rt sign*100+结尾位置，小数rt sign*100+小数点位置，分数rt sign*100+斜杠位置，百分数rt sign*100+最后一位数字位置
 {
-	int i, sign = 1, location;//整数sign=1，小数sign=2，分数sign=3，百分数sign=4
+	int TypeOFInput_i, TypeOFInput_sign = 1, TypeOFInput_location;//整数sign=1，小数sign=2，分数sign=3，百分数sign=4
 
-	for (i = 0; i < 22 && array[i] != '\0'; i++)
+	for (TypeOFInput_i = 0; TypeOFInput_i < 22 && array[TypeOFInput_i] != '\0'; TypeOFInput_i++)
 	{
-		if (array[i] == '.')
+		if (array[TypeOFInput_i] == '.')
 		{
-			sign = 2;
-			location = i;
+			TypeOFInput_sign = 2;
+			TypeOFInput_location = TypeOFInput_i;
 		}
-		else if (array[i] == '/')
+		else if (array[TypeOFInput_i] == '/')
 		{
-			sign = 3;
-			location = i;
+			TypeOFInput_sign = 3;
+			TypeOFInput_location = TypeOFInput_i;
 		}
-		else if (array[i] == '%')
+		else if (array[TypeOFInput_i] == '%')
 		{
-			sign = 4;
-			location = i - 1;
+			TypeOFInput_sign = 4;
+			TypeOFInput_location = TypeOFInput_i - 1;
 		}
 		else continue;
 	}
-	if (sign == 1) location = i - 1;
+	if (TypeOFInput_sign == 1) TypeOFInput_location = TypeOFInput_i - 1;
 
-	return sign * 100 + location;
+	return TypeOFInput_sign * 100 + TypeOFInput_location;
+}
+
+int FindEnd(char array[])
+{
+	int FindEnd_i;
+	for (FindEnd_i = 0; FindEnd_i < 22; FindEnd_i++)
+	{
+		if (array[FindEnd_i] == '\0') return FindEnd_i - 1;
+		else continue;
+	}
+}
+
+void copy(char input[], char output[], int begin, int end)//传入一个未经处理的数组和一个空数组记录处理后的内容，传入开始元素位置和结束元素位置
+{
+	int copy_i, copy_j = end;
+	
+	for (copy_i = begin; copy_i <= end; copy_i++)
+	{
+		while (copy_j >= begin)//从后往前遍历input
+		{
+			if (input[copy_j] == '0') copy_j--;//当从后往前遍历时，如果遇到0则跳过
+			else {
+				output[copy_i] = input[copy_j];//output开头第一字符等于input末尾第一个非0字符
+				copy_j--;
+				goto exit_j;
+			}
+		}
+	exit_j:continue;
+	}
 }
 
 void reverse(char input[], char output[], int param)
 {
-	int sign, location, i, j;
-	sign = param / 100; location = param % 100;
+	int reverse_sign = param / 100, reverse_location = param % 100, reverse_i, reverse_j=4;
 
-	if (sign == 1)
+	if (reverse_sign == 1)
 	{
-		for (i = 0, j = 0; i < location + 1; i++)
-		{
-			if (input[location - j] == '0')
-			{
-				j++;
-				continue;
-			}
-			else {
-				output[i] = input[location - j - i];
-			}
-		}
+		copy(input, output, 0, reverse_location);
 	}
+	else if (reverse_sign == 4)
+	{
+		copy(input, output, 0, reverse_location);
+		output[reverse_location + 1] = '%';
+	}
+	else if
 }
 
 int main()
 {
-	char raw[22] = { '1','2','3','0','0' }, reverse1[22] = { '*' };
+	char raw[22] = { '1','2','3','0','0' }, reverse1[22] = { '\0' };
 	int a;
 
 
@@ -63,7 +87,7 @@ int main()
 
 	reverse(raw, reverse1, a);
 
-	printf("%d", a);
+	printf("%d\n", a);
 	for (a = 0; a < 22 && reverse1[a] != '\0' && reverse1[a] != -52; a++)
 	{
 		printf("%c", reverse1[a]);
