@@ -65,7 +65,6 @@ void copy1(char input[], char output[], int begin_i, int end_i, int begin_o)//传
 		output[0] = '0';//如果input只有0则output也为0
 		output[1] = '\0';
 	}
-	;
 }
 
 void copy2(char input[], char output[], int begin_i, int end_i, int begin_o)//传入一个未经处理的数组和一个空数组记录处理后的内容，传入input\output开始元素位置和input结束元素位置,处理开头能为0的数字
@@ -82,7 +81,6 @@ void copy2(char input[], char output[], int begin_i, int end_i, int begin_o)//传
 		}
 	exit_j:continue;
 	}
-	;
 }
 
 void reverse(char input[], char output[], int param)//根据输入的数组及数组类型倒转数组
@@ -104,7 +102,7 @@ void reverse(char input[], char output[], int param)//根据输入的数组及数组类型倒
 		
 		copy1(input, output, 0, reverse_location - 1, 0);//倒转小数点前数字
 		reverse_end = FindEnd(output);
-		output[reverse_end] = '.';//添加小数点
+		output[reverse_end + 1] = '.';//添加小数点
 		reverse_end2 = FindEnd(input);//找到最后一位数字的位置
 		copy2(input, output, reverse_location + 1, reverse_end2, reverse_end + 2);//小数点之后的数可以从0开始
 		reverse_end2 = FindEnd(output);
@@ -113,7 +111,6 @@ void reverse(char input[], char output[], int param)//根据输入的数组及数组类型倒
 			if (output[reverse_i] == '0') output[reverse_i] = '\0';
 			else break;
 		}
-		;
 	}
 	else if (reverse_sign == 3)//判断是否为分数
 	{
@@ -136,7 +133,8 @@ int main()
 	type = TypeOFInput(raw);
 	reverse(raw, ripe, type);
 
-	printf("%d\n", type);
+	//printf("%d\n", type);
+
 	for (i = 0; i < 22 && ripe[i] != '\0' && ripe[i] != -52; i++)
 	{
 		printf("%c", ripe[i]);
