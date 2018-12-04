@@ -8,7 +8,7 @@ int TypeOFInput(char array[])//ÅĞ¶ÏÊäÈëµÄÊıÊÇÊ²Ã´ÀàĞÍ£¬ÕûÊırt sign*100+½áÎ²Î»ÖÃ£
 {
 	int TypeOFInput_i, TypeOFInput_sign = 1, TypeOFInput_location;//ÕûÊısign=1£¬Ğ¡Êısign=2£¬·ÖÊısign=3£¬°Ù·ÖÊısign=4
 
-	for (TypeOFInput_i = 0; TypeOFInput_i < 22 && array[TypeOFInput_i] != '\0'; TypeOFInput_i++)
+	for (TypeOFInput_i = 0; TypeOFInput_i < 25 && array[TypeOFInput_i] != '\0'; TypeOFInput_i++)
 	{
 		if (array[TypeOFInput_i] == '.')
 		{
@@ -35,39 +35,46 @@ int TypeOFInput(char array[])//ÅĞ¶ÏÊäÈëµÄÊıÊÇÊ²Ã´ÀàĞÍ£¬ÕûÊırt sign*100+½áÎ²Î»ÖÃ£
 int FindEnd(char array[])//ÕÒµ½Êı×éÄ©Î²Êı×ÖÔªËØÎ»ÖÃ
 {
 	int FindEnd_i;
-	for (FindEnd_i = 0; FindEnd_i < 22; FindEnd_i++)
+	for (FindEnd_i = 0; FindEnd_i < 25; FindEnd_i++)
 	{
 		if (array[FindEnd_i] == '\0') return FindEnd_i - 1;
 		else continue;
 	}
 }
 
-void copy1(char input[], char output[], int begin, int end)//´«ÈëÒ»¸öÎ´¾­´¦ÀíµÄÊı×éºÍÒ»¸ö¿ÕÊı×é¼ÇÂ¼´¦ÀíºóµÄÄÚÈİ£¬´«Èë¿ªÊ¼ÔªËØÎ»ÖÃºÍ½áÊøÔªËØÎ»ÖÃ,´¦Àí¿ªÍ·²»ÄÜÎª0µÄÊı×Ö
+void copy1(char input[], char output[], int begin_i, int end_i, int begin_o)//´«ÈëÒ»¸öÎ´¾­´¦ÀíµÄÊı×éºÍÒ»¸ö¿ÕÊı×é¼ÇÂ¼´¦ÀíºóµÄÄÚÈİ£¬´«Èëinput\output¿ªÊ¼ÔªËØÎ»ÖÃºÍinput½áÊøÔªËØÎ»ÖÃ,´¦Àí¿ªÍ·²»ÄÜÎª0µÄÊı×Ö
 {
-	int copy_i, copy_j = end;
+	int copy_i, copy_j = end_i, copy_flag = 0;//¶¨ÒåÒ»¸öflagÅĞ¶Ï0ÊÇ·ñ´¦ÓÚÄ©Î²
 	
-	for (copy_i = begin; copy_i <= end; copy_i++)
+	for (copy_i = begin_o; copy_i <= 25; copy_i++)
 	{
-		while (copy_j >= begin)//´ÓºóÍùÇ°±éÀúinput
+		while (copy_j >= begin_i)//´ÓºóÍùÇ°±éÀúinput
 		{
-			if (input[copy_j] == '0') copy_j--;//µ±´ÓºóÍùÇ°±éÀúÊ±£¬Èç¹ûÓöµ½0ÔòÌø¹ı
+			if (input[copy_j] == '0' && copy_flag == 0) copy_j--;//µ±´ÓºóÍùÇ°±éÀúÊ±£¬Èç¹ûÓöµ½0ÔòÌø¹ı
 			else {
 				output[copy_i] = input[copy_j];//output¿ªÍ·µÚÒ»×Ö·ûµÈÓÚinputÄ©Î²µÚÒ»¸ö·Ç0×Ö·û
 				copy_j--;
+				copy_flag = 1;
 				goto exit_j;
 			}
 		}
 	exit_j:continue;
 	}
+	if (output[0] == '\0')
+	{
+		output[0] = '0';//Èç¹ûinputÖ»ÓĞ0ÔòoutputÒ²Îª0
+		output[1] = '\0';
+	}
+	;
 }
 
-void copy2(char input[], char output[], int begin, int end)//´«ÈëÒ»¸öÎ´¾­´¦ÀíµÄÊı×éºÍÒ»¸ö¿ÕÊı×é¼ÇÂ¼´¦ÀíºóµÄÄÚÈİ£¬´«Èë¿ªÊ¼ÔªËØÎ»ÖÃºÍ½áÊøÔªËØÎ»ÖÃ,´¦Àí¿ªÍ·ÄÜÎª0µÄÊı×Ö
+void copy2(char input[], char output[], int begin_i, int end_i, int begin_o)//´«ÈëÒ»¸öÎ´¾­´¦ÀíµÄÊı×éºÍÒ»¸ö¿ÕÊı×é¼ÇÂ¼´¦ÀíºóµÄÄÚÈİ£¬´«Èëinput\output¿ªÊ¼ÔªËØÎ»ÖÃºÍinput½áÊøÔªËØÎ»ÖÃ,´¦Àí¿ªÍ·ÄÜÎª0µÄÊı×Ö
 {
-	int copy_i, copy_j = end;
+	int copy_i, copy_j = end_i;
 
-	for (copy_i = begin; copy_i <= end; copy_i++)
+	for (copy_i = begin_o; copy_i <= 25; copy_i++)
 	{
-		while (copy_j >= begin)//´ÓºóÍùÇ°±éÀúinput
+		while (copy_j >= begin_i)//´ÓºóÍùÇ°±éÀúinput
 		{
 			output[copy_i] = input[copy_j];//output¿ªÍ·µÚÒ»×Ö·ûµÈÓÚinputÄ©Î²µÚÒ»¸ö·Ç0×Ö·û
 			copy_j--;
@@ -75,56 +82,64 @@ void copy2(char input[], char output[], int begin, int end)//´«ÈëÒ»¸öÎ´¾­´¦ÀíµÄÊ
 		}
 	exit_j:continue;
 	}
+	;
 }
 
 void reverse(char input[], char output[], int param)//¸ù¾İÊäÈëµÄÊı×é¼°Êı×éÀàĞÍµ¹×ªÊı×é
 {
-	int reverse_sign = param / 100, reverse_location = param % 100, reverse_i, reverse_j = 4, reverse_end;
+	int reverse_sign = param / 100, reverse_location = param % 100, reverse_i, reverse_j = 4, reverse_end, reverse_end2;
 
 	if (reverse_sign == 1)//ÅĞ¶ÏÊÇ·ñÎªÕûÊı
 	{
-		copy1(input, output, 0, reverse_location);
+		copy1(input, output, 0, reverse_location, 0);
 	}
 	else if (reverse_sign == 4)//ÅĞ¶ÏÊÇ·ñÎª°Ù·ÖÊı
 	{
-		copy1(input, output, 0, reverse_location);
-		output[reverse_location + 1] = '%';//Ä©Î²Ìí¼Ó°Ù·ÖºÅ
+		copy1(input, output, 0, reverse_location, 0);
+		reverse_end = FindEnd(output);
+		output[reverse_end + 1] = '%';//Ä©Î²Ìí¼Ó°Ù·ÖºÅ
 	}
 	else if (reverse_sign == 2)//ÅĞ¶ÏÊÇ·ñÎªĞ¡Êı
 	{
-		reverse_end = FindEnd(input);//ÕÒµ½×îºóÒ»Î»Êı×ÖµÄÎ»ÖÃ
-		copy1(input, output, 0, reverse_location - 1);//µ¹×ªĞ¡ÊıµãÇ°Êı×Ö
-		output[reverse_location] = '.';//Ìí¼ÓĞ¡Êıµã
-		copy2(input, output, reverse_location + 1, reverse_end);//Ğ¡ÊıµãÖ®ºóµÄÊı¿ÉÒÔ´Ó0¿ªÊ¼
-		for (reverse_i = reverse_end; reverse_i > reverse_location; reverse_i--)//Ğ¡ÊıµãºóµÄÊı×Ö²»ÄÜÒÔ0½áÎ²
+		
+		copy1(input, output, 0, reverse_location - 1, 0);//µ¹×ªĞ¡ÊıµãÇ°Êı×Ö
+		reverse_end = FindEnd(output);
+		output[reverse_end] = '.';//Ìí¼ÓĞ¡Êıµã
+		reverse_end2 = FindEnd(input);//ÕÒµ½×îºóÒ»Î»Êı×ÖµÄÎ»ÖÃ
+		copy2(input, output, reverse_location + 1, reverse_end2, reverse_end + 2);//Ğ¡ÊıµãÖ®ºóµÄÊı¿ÉÒÔ´Ó0¿ªÊ¼
+		reverse_end2 = FindEnd(output);
+		for (reverse_i = reverse_end2; reverse_i > reverse_end + 2; reverse_i--)//Ğ¡ÊıµãºóµÄÊı×Ö²»ÄÜÒÔ0½áÎ²
 		{
 			if (output[reverse_i] == '0') output[reverse_i] = '\0';
 			else break;
 		}
+		;
 	}
 	else if (reverse_sign == 3)//ÅĞ¶ÏÊÇ·ñÎª·ÖÊı
 	{
-		reverse_end = FindEnd(input);//ÕÒµ½×îºóÒ»Î»Êı×ÖµÄÎ»ÖÃ
-		copy1(input, output, 0, reverse_location - 1);//µ¹×ª·ÖºÅÇ°Êı×Ö
-		output[reverse_location] = '/';//Ìí¼Ó·ÖºÅ
-		copy2(input, output, reverse_location + 1, reverse_end);//µ¹×ª·ÖºÅºóÊı×Ö
+		
+		copy1(input, output, 0, reverse_location - 1, 0);//µ¹×ª·ÖºÅÇ°Êı×Ö
+		reverse_end = FindEnd(output);
+		output[reverse_end + 1] = '/';//Ìí¼Ó·ÖºÅ
+		reverse_end2 = FindEnd(input);//ÕÒµ½×îºóÒ»Î»Êı×ÖµÄÎ»ÖÃ
+		copy1(input, output, reverse_location + 1, reverse_end2, reverse_end + 2);//µ¹×ª·ÖºÅºóÊı×Ö
 	}
 }
 
 int main()
 {
-	char raw[22] = { '1','2','.','3','0','0' }, reverse1[22] = { '\0' };
-	int a;
+	int type, i;
+	char raw[25], ripe[25] = { '\0' };
 
+	scanf("%s", &raw);
 
-	a = TypeOFInput(raw);
+	type = TypeOFInput(raw);
+	reverse(raw, ripe, type);
 
-	reverse(raw, reverse1, a);
-
-	printf("%d\n", a);
-	for (a = 0; a < 22 && reverse1[a] != '\0' && reverse1[a] != -52; a++)
+	printf("%d\n", type);
+	for (i = 0; i < 22 && ripe[i] != '\0' && ripe[i] != -52; i++)
 	{
-		printf("%c", reverse1[a]);
+		printf("%c", ripe[i]);
 	}
 
 	system("pause");
