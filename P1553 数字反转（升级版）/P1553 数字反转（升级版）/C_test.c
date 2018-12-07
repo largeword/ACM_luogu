@@ -150,9 +150,9 @@ int TypeOFInput(char array[])//查找是否有./%等符号，如有则返回 该符号的位置*100+
 
 	for (i = 0; i < 25 && array[i] != '\0'; i++)
 	{
-		if (array[i] >= 37 && array[i] <= 47)
+		if (array[i] >= 37 && array[i] <= 47)//ascii码是否在。到%之间，检查是否存在符号
 		{
-			location = i;
+			location = i;//如有则返回符号位置
 			continue;
 		}
 		else continue;
