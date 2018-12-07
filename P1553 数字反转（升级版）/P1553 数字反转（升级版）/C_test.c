@@ -4,7 +4,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-int TypeOFInput(char array[])//判断输入的数是什么类型，整数rt sign*100+结尾位置，小数rt sign*100+小数点位置，分数rt sign*100+斜杠位置，百分数rt sign*100+最后一位数字位置
+/*int TypeOFInput(char array[])//判断输入的数是什么类型，整数rt sign*100+结尾位置，小数rt sign*100+小数点位置，分数rt sign*100+斜杠位置，百分数rt sign*100+最后一位数字位置
 {
 	int TypeOFInput_i, TypeOFInput_sign = 1, TypeOFInput_location;//整数sign=1，小数sign=2，分数sign=3，百分数sign=4
 
@@ -134,6 +134,107 @@ int main()
 	reverse(raw, ripe, type);
 
 	//printf("%d\n", type);
+
+	for (i = 0; i < 22 && ripe[i] != '\0' && ripe[i] != -52; i++)
+	{
+		printf("%c", ripe[i]);
+	}
+
+	system("pause");
+	return 0;
+}*/
+
+int TypeOFInput(char array[])//查找是否有./%等符号，如有则返回 该符号的位置*100+末尾位置，如没有则返回 0*100+末尾位置
+{
+	int i, location = 0, end;
+
+	for (i = 0; i < 25 && array[i] != '\0'; i++)
+	{
+		if (array[i] >= 37 && array[i] <= 47)
+		{
+			location = i;
+			continue;
+		}
+		else continue;
+	}
+	end = i - 1;
+
+	return location * 100 + end;
+}
+
+int FindEnd(char array[])//找到数组末尾数字元素位置
+{
+	int FindEnd_i;
+	for (FindEnd_i = 0; FindEnd_i < 25; FindEnd_i++)
+	{
+		if (array[FindEnd_i] == '\0') return FindEnd_i - 1;
+		else continue;
+	}
+
+	return -1;//若找不到，则返回-1
+}
+
+void copy(char input[], int input_begin, int input_end, char output[], int output_begin)
+{
+	int copy_i, copy_j = input_end, copy_flag = 0;
+	
+	if (input_begin > input_end) return;
+	else {
+		for (copy_i = output_begin; copy_i <= 25; copy_i++)
+		{
+			while (copy_j >= input_begin)//从后往前遍历input
+			{
+				if (input[copy_j] == '0' && copy_flag == 0) copy_j--;//当从后往前遍历时，如果遇到0则跳过
+				else {
+					output[copy_i] = input[copy_j];//output开头第一字符等于input末尾第一个非0字符
+					copy_j--;
+					copy_flag = 1;
+					goto exit_j;
+				}
+			}
+		exit_j:continue;
+		}
+
+		if (output[output_begin] == '\0')
+		{
+			output[output_begin] = '0';//如果input只有0则output也为0
+			output[output_begin + 1] = '\0';
+		}
+	}
+}
+
+void reverse(char input[], char output[], int param)
+{
+	int sign_location = param / 100, end_location = param % 100, reverse_end;//原数列符号位，结尾位，临时变量储存数列结尾位置
+
+	if (sign_location == 0) copy(input, 0, end_location, output, 0);//输入的是整数时，直接反转所有数位
+	else {
+		copy(input, 0, sign_location - 1, output, 0);//非整数时，先反转符号前面的数位
+		reverse_end = FindEnd(output);//找到新数组的末尾位置
+		output[reverse_end + 1] = input[sign_location];//把原数列的符号复制到新数列中
+		copy(input, sign_location + 1, end_location, output, reverse_end + 2);//反转符号后的数位
+
+		reverse_end = FindEnd(output);
+		while (1) {
+			if (output[reverse_end] == '0' && output[reverse_end - 1] != '.')//检查是否为0.0状态
+			{
+				output[reverse_end] = '\0';//如果不是，则通过循环去除最后面的0
+				reverse_end--;
+			}
+			else break;
+		}
+	}
+}
+
+int main()
+{
+	int type, i;
+	char raw[25], ripe[25] = { '\0' };
+
+	scanf("%s", &raw);
+
+	type = TypeOFInput(raw);
+	reverse(raw, ripe, type);
 
 	for (i = 0; i < 22 && ripe[i] != '\0' && ripe[i] != -52; i++)
 	{
